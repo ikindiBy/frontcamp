@@ -1,9 +1,11 @@
 'use strict'
 
-import  { KEY, ALL_COUNTRIES_FROM_API, ALL_CATEGORIES } from './constants.js';
+import  { KEY, ALL_CATEGORIES } from './constants';
+import  { validateImageSource } from './helpers';
 
 const navigationCategories = document.getElementById('categories_nav');
-const elem = document.getElementById('firstPoint');
+const sourcesGroup = document.getElementById('sources_group');
+const newsGroup = document.getElementById('news_group');
 
 const createCategoriesNav = () => {
     ALL_CATEGORIES.forEach(cat => {
@@ -22,26 +24,29 @@ const showListSourcesByCategory = (categoryId) => {
     const req = new Request(url);
 
     fetch(req)
-        .then((result) => result.json())
-        .then(res => {
-            const listSources = res.sources;
-            
-            let ii = 1;
-            const ul = document.createElement('ul');
+    .then((result) => result.json())
+    .then(res => {
+        const listSources = res.sources;
+        const div = document.createElement('div');
+        div.classList.add("set_resources");
 
-            listSources.forEach( source => {
-                const li = document.createElement('lo');
-                li.innerHTML = `<div class="title-article" data-source-id="${source.id}"> ${ii} ${source.name} </div>`;
-                ul.appendChild(li);
-                ii++;
-            })
+        listSources.forEach( source => {
+            const divForSource = document.createElement('div');
 
-            elem.innerHTML = '';
-            elem.appendChild(ul);
-            ul.addEventListener('click', e => {
-                showRecordsBySourceId(e.target.dataset.sourceId);
-            });
-            
+            divForSource.innerHTML = `<a href="#news_group">
+                                        <p class="title-source" data-source-id="${source.id}"> 
+                                            ${source.name} 
+                                        </p>
+                                    </a>`;
+
+            div.appendChild(divForSource);
+        })
+
+        sourcesGroup.innerHTML = '';
+        sourcesGroup.appendChild(div);
+        div.addEventListener('click', e => {
+            showRecordsBySourceId(e.target.dataset.sourceId);
+        });   
     })
     .catch(err => {
         console.log('Fetch Error: ', err);
@@ -59,17 +64,17 @@ const showRecordsBySourceId = (sourceId) => {
         const listArticles = res.articles;
         const ul = document.createElement('ul');
 
-        console.log('*************************** ', listArticles);
-
         listArticles.forEach( article => {
             const li = document.createElement('li');
-            const urlImage = article.urlToImage || './images/noimage.png';
+            const urlToImage = article.urlToImage;
+            const urlImage = validateImageSource(urlToImage) ? urlToImage : './images/noimage.png';
+             
             li.innerHTML = `<div class="title-article" data-article-id="${article.id}"> <img src=${urlImage}> <p>${article.title} </p></div>`;
             ul.appendChild(li);
         })
 
-        elem.innerHTML = '';
-        elem.appendChild(ul);
+        newsGroup.innerHTML = '';
+        newsGroup.appendChild(ul);
     })
     .catch(err => {
         console.log('Fetch Error: ', err);

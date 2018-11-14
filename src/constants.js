@@ -1,63 +1,6 @@
 
 const KEY = '9ea41e2e635e4b6e9aa7c9d2d3d1ec05';
 
-const ALL_COUNTRIES_FROM_API = [
-    "ae",
-    "ar",
-    "at",
-    "au",
-    "be",
-    "bg",
-    "br",
-    "ca",
-    "ch",
-    "cn",
-    "co",
-    "cu",
-    "cz",
-    "de",
-    "eg",
-    "fr",
-    "gb",
-    "gr",
-    "hk",
-    "hu",
-    "id",
-    "ie",
-    "il",
-    "in",
-    "it",
-    "jp",
-    "kr",
-    "lt",
-    "lv", 
-    "ma",
-    "mx", 
-    "my",
-    "ng",
-    "nl", 
-    "no", 
-    "nz",
-    "ph",
-    "pl",
-    "pt",
-    "ro", 
-    "rs",
-    "ru",
-    "sa",
-    "se",
-    "sg",
-    "si",
-    "sk",
-    "th",
-    "tr",
-    "tw",
-    "ua",
-    "us",
-    "ve",
-    "za"
-];
-
 const ALL_CATEGORIES = [
     "general",
     "business",
@@ -68,4 +11,4 @@ const ALL_CATEGORIES = [
     "technology"
 ];
 
-module.exports = { KEY, ALL_COUNTRIES_FROM_API, ALL_CATEGORIES };
+export { KEY, ALL_CATEGORIES };
