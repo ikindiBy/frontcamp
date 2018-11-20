@@ -8,7 +8,10 @@ const ALL_CATEGORIES = [
     "health",
     "science",
     "sports",
-    "technology"
+    "technology",
 ];
 
-export { KEY, ALL_CATEGORIES };
+export { 
+    KEY,
+    ALL_CATEGORIES,
+};
