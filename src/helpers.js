@@ -7,4 +7,17 @@ const validateImageSource = (url) => {
     return true;
 }
 
-export { validateImageSource };
+const  fetchByURL = async (url) => {
+    const req = new Request(url);
+    let result = [];
+    try {
+        const response = await fetch(req);
+        result = await response.json();
+    } catch(err) {
+        console.log('Fetch Error: ', err);
+    } finally {
+        return result;
+    }
+} 
+
+export { validateImageSource, fetchByURL };

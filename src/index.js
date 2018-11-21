@@ -2,12 +2,11 @@
 
 import  { KEY, ALL_CATEGORIES } from './constants';
 import  { createListArticles, createListSources } from './viewCreators';
-
-const navigationCategories = document.getElementById('categories_nav');
-const sourcesGroup = document.getElementById('sources_group');
-const newsGroup = document.getElementById('news_group');
+import  { fetchByURL } from './helpers';
 
 const createCategoriesNav = () => {
+    const navigationCategories = document.getElementById('categories_nav');
+
     ALL_CATEGORIES.forEach(cat => {
         const divCat = document.createElement('div');
         divCat.innerHTML = `<span class="cat_of_source" data-cateory-id="${cat}"> ${cat.toUpperCase()} </span>`;
@@ -19,22 +18,11 @@ const createCategoriesNav = () => {
     })
 };
 
-const  fetchMy = async (url) => {
-    const req = new Request(url);
-    let result = [];
-    try {
-        const response = await fetch(req);
-        result = await response.json();
-    } catch(err) {
-        console.log('Fetch Error: ', err);
-    } finally {
-        return result;
-    }
-} 
-
 const showListSourcesByCategory = async (categoryId) => {
+    const sourcesGroup = document.getElementById('sources_group');
+
     const url = `https://newsapi.org/v2/sources?category=${categoryId}&apiKey=${KEY}`;
-    const response = await fetchMy(url);
+    const response = await fetchByURL(url);
     const div = createListSources(response.sources);
 
     sourcesGroup.innerHTML = '';
@@ -45,8 +33,10 @@ const showListSourcesByCategory = async (categoryId) => {
 };
 
 const showRecordsBySourceId = async (sourceId) => {
+    const newsGroup = document.getElementById('news_group');
+    
     const url = `https://newsapi.org/v2/top-headlines?sources=${sourceId}&apiKey=${KEY}`;
-    const response = await fetchMy(url);
+    const response = await fetchByURL(url);
     const ul = createListArticles(response.articles);
     
     newsGroup.innerHTML = '';
