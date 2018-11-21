@@ -5,7 +5,7 @@ const validateImageSource = (url) => {
         return false;
     } 
     return true;
-}
+};
 
 const  fetchByURL = async (url) => {
     const req = new Request(url);
@@ -15,9 +15,8 @@ const  fetchByURL = async (url) => {
         result = await response.json();
     } catch(err) {
         console.log('Fetch Error: ', err);
-    } finally {
-        return result;
     }
-} 
+    return result;
+};
 
 export { validateImageSource, fetchByURL };

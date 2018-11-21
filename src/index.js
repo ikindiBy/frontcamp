@@ -1,13 +1,13 @@
 'use strict'
-
+import '@babel/polyfill';
+import "isomorphic-fetch";
 import  { KEY, ALL_CATEGORIES } from './constants';
 import  { createListArticles, createListSources } from './viewCreators';
 import  { fetchByURL } from './helpers';
 
 const createCategoriesNav = () => {
     const navigationCategories = document.getElementById('categories_nav');
-
-    ALL_CATEGORIES.forEach(cat => {
+    ALL_CATEGORIES.forEach((cat) => {
         const divCat = document.createElement('div');
         divCat.innerHTML = `<span class="cat_of_source" data-cateory-id="${cat}"> ${cat.toUpperCase()} </span>`;
         navigationCategories.appendChild(divCat);
@@ -15,7 +15,7 @@ const createCategoriesNav = () => {
 
     navigationCategories.addEventListener('click', e => {
         showListSourcesByCategory(e.target.dataset.cateoryId);  
-    })
+    });
 };
 
 const showListSourcesByCategory = async (categoryId) => {
@@ -41,6 +41,6 @@ const showRecordsBySourceId = async (sourceId) => {
     
     newsGroup.innerHTML = '';
     newsGroup.appendChild(ul);
-}
+};
 
 createCategoriesNav();

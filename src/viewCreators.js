@@ -44,7 +44,7 @@ const createListSources = (sources) => {
         div.appendChild(divForSource);
         });
     return div;
-}
+};
 
 export {
     createListArticles,
