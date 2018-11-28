@@ -15,7 +15,7 @@ module.exports = {
 	context: path.resolve(__dirname, "src"),
 
 	entry: {
-		main: "./js/index.js",
+		main: "./js/startPoint.js",
     },
 
 	devtool: "source-map",
@@ -27,6 +27,7 @@ module.exports = {
 	output: {
 		filename: 'main.js',
 		path: distPath,
+		chunkFilename: '[name].bundle.js',
 		// path: path.join(__dirname, "dist"),
 		// publicPath: '/',
 		// filename: '[name].[chunkhash].js'
@@ -49,7 +50,8 @@ module.exports = {
                                             } 
                                     }
                                 ]
-                            ]
+							],
+							plugins: ['@babel/plugin-syntax-dynamic-import']
 						}
 					}
 				],

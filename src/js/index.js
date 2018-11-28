@@ -1,4 +1,5 @@
 'use strict'
+
 import '@babel/polyfill';
 import "isomorphic-fetch";
 import  { KEY, ALL_CATEGORIES } from './constants';
@@ -47,4 +48,9 @@ const showRecordsBySourceId = async (sourceId) => {
     newsGroup.appendChild(ul);
 };
 
-createCategoriesNav();
+export default () => {
+    console.log('Button Clicked: Here\'s "some text"!');
+    createCategoriesNav();
+  };
+
+
