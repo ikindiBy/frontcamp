@@ -1,13 +1,16 @@
 const path = require('path');
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 	context: path.resolve(__dirname, "src"),
 
-	mode: "development",
+	// mode: "development",
 
 	entry: {
-		index: "./index.js",
+		main: "./js/index.js",
     },
 
 	devtool: "source-map",
@@ -18,7 +21,8 @@ module.exports = {
 
 	output: {
 		path: path.join(__dirname, "dist"),
-		publicPath: '/'
+		publicPath: '/',
+		// filename: '[name].[chunkhash].js'
 	},
 
 	module: {
@@ -44,6 +48,24 @@ module.exports = {
 				],
 				exclude: /(node_modules|bower_components)/,
 			}, 
+			{
+				test: /\.s?css$/,
+				use: [
+						'style-loader',
+						MiniCssExtractPlugin.loader,
+						'css-loader',
+	          			// 'sass-loader'|
+				]
+			},
+			{
+				test: /\.(png|jpg|gif)$/,
+				loader: 'file-loader',
+				options: {
+					name: '[path][name].[ext]',
+					outputPath: 'images/'
+					// name: '[name][hash].[ext]?[hash]'
+				}
+			},
 		]
     },
     
@@ -70,8 +92,24 @@ module.exports = {
 	},
 
 	plugins: [
+		new CaseSensitivePathsPlugin(),
+		new HtmlWebpackPlugin({
+				inject: false,
+				hash: true,
+				template: './index.html',
+      			filename: 'index.html'
+			}),
+		new MiniCssExtractPlugin({
+				filename: "style.css",
+				// filename: 'style.[contenthash].css',
+			}),
 		new webpack.HotModuleReplacementPlugin()
-        ],
+	],
+
+	devServer: {
+		hot: true,
+		historyApiFallback: true
+	},
         
 	watch: true,
 }
