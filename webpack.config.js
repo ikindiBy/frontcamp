@@ -1,13 +1,18 @@
 const path = require('path');
 const webpack = require('webpack');
+const argv = require('yargs').argv;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+const isDevelopment = argv.mode === 'development';
+const isProduction = !isDevelopment;
+const distPath = path.join(__dirname, '/public');
 
 module.exports = {
 	context: path.resolve(__dirname, "src"),
-
-	// mode: "development",
 
 	entry: {
 		main: "./js/index.js",
@@ -20,8 +25,10 @@ module.exports = {
 	},
 
 	output: {
-		path: path.join(__dirname, "dist"),
-		publicPath: '/',
+		filename: 'main.js',
+		path: distPath,
+		// path: path.join(__dirname, "dist"),
+		// publicPath: '/',
 		// filename: '[name].[chunkhash].js'
 	},
 
@@ -51,25 +58,39 @@ module.exports = {
 			{
 				test: /\.s?css$/,
 				use: [
-						'style-loader',
-						MiniCssExtractPlugin.loader,
+						isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
 						'css-loader',
 	          			// 'sass-loader'|
 				]
 			},
 			{
-				test: /\.(png|jpg|gif)$/,
-				loader: 'file-loader',
-				options: {
-					name: '[path][name].[ext]',
-					outputPath: 'images/'
-					// name: '[name][hash].[ext]?[hash]'
-				}
+				test: /\.(png|jpg|gif)$/i,
+				use: [
+						{
+							loader: 'file-loader',
+							options: {
+								name: 'images/[name][hash].[ext]',
+								// outputPath: 'images/'
+								// name: '[name][hash].[ext]?[hash]'
+							}
+						},
+					],
 			},
 		]
-    },
+	},
     
-	optimization: {
+	optimization: isProduction ? {
+		minimizer: [
+			new UglifyJsPlugin({
+			  sourceMap: true,
+			  uglifyOptions: {
+				compress: {
+				  inline: false,
+				  drop_console: true
+				},
+			  },
+			}),
+		  ],
 		splitChunks: {
 			cacheGroups: {
 				commons: {
@@ -89,9 +110,10 @@ module.exports = {
 				}
 			}
 		}
-	},
+	} : {},
 
 	plugins: [
+		new CleanWebpackPlugin(['pulic']),
 		new CaseSensitivePathsPlugin(),
 		new HtmlWebpackPlugin({
 				inject: false,
@@ -109,6 +131,14 @@ module.exports = {
 	devServer: {
 		hot: true,
 		historyApiFallback: true
+	},
+	
+	devtool: 'sorce-map',
+	devServer: {
+		contentBase: distPath,
+		port: 9000,
+		compress: true,
+		open: true
 	},
         
 	watch: true,

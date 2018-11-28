@@ -6,6 +6,8 @@ import  { createListArticles, createListSources } from './viewCreators';
 import  { fetchByURL } from './helpers';
 
 import "../style/style.css";
+import "../images/noimage.png";
+
 
 const createCategoriesNav = () => {
     const navigationCategories = document.getElementById('categories_nav');
