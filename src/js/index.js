@@ -8,6 +8,11 @@ import  { fetchByURL } from './helpers';
 
 import "../style/style.css";
 import "../images/noimage.png";
+import data from "../json/test.json";
+
+// import * as data from './example.json';
+
+console.log(888888888888888888, data);
 
 
 const createCategoriesNav = () => {

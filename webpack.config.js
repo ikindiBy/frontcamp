@@ -78,6 +78,11 @@ module.exports = {
 						},
 					],
 			},
+			{
+				type: 'javascript/auto',
+				test: /\.json$/,
+				loader: path.resolve('./customLoader.js'),
+			  }
 		]
 	},
     
