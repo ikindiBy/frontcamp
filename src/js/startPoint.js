@@ -1,13 +1,22 @@
 'use strict'
 
-import "../json/test.json";
+import '@babel/polyfill';
+import "isomorphic-fetch";
+import "../style/style.css";
+import "../images/noimage.png";
 
-const button = document.getElementById('show_news');
+import  Controller from './Controller';
+import  View from './View';
+import  DataModel from './DataModel';
 
-button.onclick = e => import(/* webpackChunkName: "print" */ './index').then(module => {
-    const index = module.default;
-    index();
-});
+
+const targetElement = document.getElementById('categories_nav');
+
+const view = new View(targetElement);
+const model = new DataModel();
+const controller = new Controller(view, model);
+
+controller.initialize();
 
 
 
