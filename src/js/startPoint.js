@@ -17,6 +17,3 @@ const model = new DataModel();
 const controller = new Controller(view, model);
 
 controller.initialize();
-
-
-

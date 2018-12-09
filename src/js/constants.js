@@ -11,7 +11,10 @@ const ALL_CATEGORIES = [
     "technology",
 ];
 
+const NUMBER_ITEMS = 10;
+
 export { 
     KEY,
     ALL_CATEGORIES,
+    NUMBER_ITEMS,
 };

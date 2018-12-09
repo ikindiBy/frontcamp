@@ -187,3 +187,61 @@ footer h4 {
         width: 100%;
     }
   }
+
+  /*--------------------------------------*/
+
+  .popup__wrapper {
+    z-index: 2;
+    display: none;
+  }
+
+  .popup__main {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    
+    width: 500px;
+    
+    background: #eee;
+    
+    transform: translate(-50%, -50%);
+  }
+  .popup__header {
+    position: relative;
+    
+    margin: 0;
+    padding: 25px 10px;
+    
+    font-size: 30px;
+    background: #F72743;
+  }
+  
+  .popup__btn {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    
+    font-size: 25px;
+    
+    background: none;
+    border: none;
+    
+    transition: 0.3s linear color;
+  }
+  
+  .popup__btn:hover, 
+  .popup__btn:focus {
+    cursor: pointer;
+    color: #fff;
+  }
+  
+  .popup__content {
+    padding: 25px 10px;
+  }
+  
+  /* js */
+  
+  .show__popup {
+    display: block;
+  }
