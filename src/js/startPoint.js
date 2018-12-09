@@ -3,7 +3,6 @@
 import '@babel/polyfill';
 import "isomorphic-fetch";
 import "../style/style.css";
-import "../images/noimage.png";
 
 import  Controller from './Controller';
 import  View from './View';

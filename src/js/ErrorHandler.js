@@ -1,5 +1,6 @@
 'use strict'
 
+import "../style/errorPopup.css";
 import  { createErrPopup } from './ErrHelpers';
 
 let instance = null;

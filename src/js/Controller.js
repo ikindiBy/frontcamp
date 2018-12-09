@@ -1,10 +1,7 @@
 'use strict'
 
-import  ErrorHandler from './ErrorHandler';
 import  { getShortListItems } from './helpers';
 import  { NUMBER_ITEMS } from './constants';
-
-const errorHandler = new ErrorHandler();
 
 export default class Controller {
     constructor(view, model) {
@@ -32,7 +29,11 @@ export default class Controller {
                 this.view.renderListSourcesByCategory(sources);
             }
         } catch (err) {
-            errorHandler.showErrorModal(err);
+            import(/* webpackChunkName: "ErrorHandler" */ './ErrorHandler').then(module => {
+                const ErrorHandler = module.default;
+                const errorHandler = new ErrorHandler();
+                errorHandler.showErrorModal(err);
+            });
         }
     }
 
