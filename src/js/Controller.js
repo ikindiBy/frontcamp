@@ -32,7 +32,6 @@ export default class Controller {
                 this.view.renderListSourcesByCategory(sources);
             }
         } catch (err) {
-            console.log('cathed')
             errorHandler.showErrorModal(err);
         }
     }

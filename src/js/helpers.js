@@ -30,4 +30,21 @@ const getShortListItems = (items) => {
     return items.slice(startNum, startNum + NUMBER_ITEMS);
 }
 
-export { validateImageSource, fetchByURL, getShortListItems };
+// const loadErrorHandling = () => {
+//     let ErrorHandler = null;
+//     console.log('---------------  loadErrorHandling  ---');
+//     import(/* webpackChunkName: "print" */ './ErrorHandler').then(module => {
+        
+//         ErrorHandler = module.default;
+//         console.log('----======-------  loadErrorHandling  ---',ErrorHandler);
+//         // return ErrorHandler;
+//     });
+//     return ErrorHandler;
+// }
+
+export { 
+    validateImageSource,
+    fetchByURL,
+    getShortListItems,
+    // loadErrorHandling,
+};

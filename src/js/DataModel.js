@@ -3,11 +3,7 @@
 import  { KEY } from './constants';
 import  { fetchByURL } from './helpers';
 
-
-
 export default class DataModel {
-    constructor() {
-    }
 
     async getListSourcesByCategory (categoryId) {
         const url = `https://newsapi.org/v2/sources?category=${categoryId}&apiKey=${KEY}`;
