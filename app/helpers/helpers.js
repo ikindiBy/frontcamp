@@ -7,12 +7,15 @@ const getAllNews = () => {
 };
 
 const getNewsById = (id) => {
-    console.log('______',id );
-    return arrNews.filter(item => item.id === id);
+    id = parseInt(id,10);
+    const result = arrNews.filter(item => item.id === id);
+    return result;
 }
 
 const deleteNewsById = (id) => {
-    return arrNews.filter(item => item.id === id);
+    id = parseInt(id,10);
+    arrNews = arrNews.filter(item => item.id !== id);
+    return arrNews;
 }
 
 module.exports =  { getAllNews: getAllNews, getNewsById: getNewsById };

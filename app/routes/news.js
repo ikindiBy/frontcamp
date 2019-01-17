@@ -13,13 +13,18 @@ router.get('/:id', (req, res, next) => {
 });
 
 /* PUT news page by ID. */
-router.put('/:id', (req, res, next) => {
-  res.send(`Your article is ${req.params.id}`);
+router.put('/', (req, res, next) => {
+  res.send(`Insert new article is`);
 });
 
 /* DELETE news page by ID. */
 router.delete('/:id', (req, res, next) => {
   res.send(`Your article is ${req.params.id}`);
+});
+
+/* DELETE news page by ID. */
+router.post('/', function (req, res) {
+  res.send('Got a POST request');
 });
 
 module.exports = router;
