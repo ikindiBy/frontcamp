@@ -1,21 +1,27 @@
 const express = require("express");
+const path = require("path");
 const app = express();
+const bodyParser = require("body-parser");
 
-const ItemNews = require("./models/itemNews");
+const routes = require("./routes");
 
+const models = require("./models");
+
+/* add template EJS*/
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
+
+/*
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
+*/
 
-app.get("/create", (req, res) => {
-  const { title, body } = {
-    title: "gfh fgh fg",
-    body: "mockBody -cvbcvb df  d  vb gh  c f -- lorem ips...."
-  };
-  ItemNews.create({
-    title,
-    body
-  }).then(itemNews => console.log("new item of news with id = ", itemNews.id));
-});
+/* with template from EJS*/
+// app.get("/", (req, res) => res.render("index", { data: data }));
+
+// routes
+app.use("/", routes.articles);
 
 module.exports = app;
