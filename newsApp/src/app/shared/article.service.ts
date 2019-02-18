@@ -4,14 +4,46 @@ import { news } from "./data";
 export class ArticleService {
   articles: IArticle[] = news;
 
+  getArticle(articleId): IArticle {
+    let result;
+    this.articles.forEach(article => {
+      if (article.id === articleId) result = article;
+    });
+    return result;
+  }
+
   getArticles(): IArticle[] {
     return this.articles;
   }
 
-  crateArticle(article: IArticle) {}
+  createArticle(article) {
+    if (
+      article.heading &&
+      article.content &&
+      article.heading.trim() &&
+      article.content.trim()
+    ) {
+      let dateRaw = new Date();
+      let newId = Date.now();
+      const date = `${dateRaw.getDate()}/${dateRaw.getMonth() +
+        1}/${dateRaw.getFullYear()}`;
+      this.articles.forEach(art => {
+        if (art.id === newId) newId += 888888888888;
+      });
+      const newArticle: any = {
+        id: newId,
+        heading: article.heading,
+        content: article.content,
+        description: article.description || "...",
+        author: article.author || "no name",
+        date: article.date || date
+      };
+
+      this.articles.push(newArticle);
+    }
+  }
 
   readMore(article: IArticle) {
-    console.log(article);
     let indexOfArticle = this.articles.indexOf(article);
     if (indexOfArticle > -1) {
     }
@@ -24,8 +56,12 @@ export class ArticleService {
       article.heading.trim() &&
       article.content.trim()
     ) {
+      let indexOfArticle;
+      this.articles.forEach((art, index) => {
+        if (art.id === article.id) indexOfArticle = index;
+      });
       const editedArticle: any = {
-        id: Date.now(),
+        id: article.id,
         heading: article.heading,
         content: article.content,
         description: article.description || "",
@@ -33,7 +69,7 @@ export class ArticleService {
         date: article.date || ""
       };
 
-      this.articles.push(editedArticle);
+      this.articles[indexOfArticle] = editedArticle;
     }
   }
 

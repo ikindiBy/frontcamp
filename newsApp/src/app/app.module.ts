@@ -17,17 +17,21 @@ import { EditingArticleComponent } from "./editing-article/editing-article.compo
 import { EditFormComponent } from "./edit-form/edit-form.component";
 
 import { ArticleService } from "./shared/article.service";
+import { NotFoundComponent } from "./not-found/not-found.component";
+import { CreateArticleComponent } from "./create-article/create-article.component";
 
 const AppRoutes: Routes = [
   // { path: "", component: AppComponent },
   { path: "list", component: ListArticlesComponent },
   {
-    path: "articlePage",
+    path: "articlePage/:id",
     component: ArticlePageComponent
     // children: [{ path: "id", component: ArticlePageComponent }]
   },
   { path: "article/:id", component: ArticlePageComponent },
-  { path: "edit/:id", component: EditingArticleComponent }
+  { path: "create", component: CreateArticleComponent },
+  { path: "edite/:id", component: EditingArticleComponent },
+  { path: "**", component: NotFoundComponent }
 ];
 
 @NgModule({
@@ -42,7 +46,9 @@ const AppRoutes: Routes = [
     FooterComponent,
     ListArticlesComponent,
     EditingArticleComponent,
-    EditFormComponent
+    EditFormComponent,
+    NotFoundComponent,
+    CreateArticleComponent
   ],
   imports: [
     BrowserModule,

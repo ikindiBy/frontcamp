@@ -4,14 +4,14 @@
     <p>
       {{ article.content }}
     </p>
-    <a href="#" (click)="readMore()" [routerLink]="route">Read more...</a>
+    <a [routerLink]="['/articlePage', article.id]">Read more...</a>
   </div>
   <div class="time_mark">
     <p>{{ article.date }}</p>
     <p>{{ article.author }}</p>
   </div>
   <div class="control_block">
-    <button class="delete icon" (click)="onEdite()">
+    <button class="edite icon" [routerLink]="['/edite', article.id]">
       <i class="material-icons">edit</i>
     </button>
     <button class="delete icon" (click)="onDelete()">

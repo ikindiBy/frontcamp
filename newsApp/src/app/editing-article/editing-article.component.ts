@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { IArticle } from "../shared/IArticle";
 import { ArticleService } from "../shared/article.service";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-editing-article",
@@ -8,20 +9,17 @@ import { ArticleService } from "../shared/article.service";
   styleUrls: ["./editing-article.component.css"]
 })
 export class EditingArticleComponent implements OnInit {
-  editedArticle = {};
+  public editedArticle = {};
 
-  constructor(private articleService: ArticleService) {}
+  constructor(
+    private articleService: ArticleService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
-  ngOnInit() {}
-
-  // public editedArticle: any = {
-  //   id: null,
-  //   heading: "",
-  //   content: "",
-  //   description: "",
-  //   author: "",
-  //   date: ""
-  // };
+  ngOnInit() {
+    let articleId = this.activatedRoute.snapshot.paramMap.get("id");
+    this.editedArticle = this.articleService.getArticle(+articleId);
+  }
 
   editArticle() {
     this.articleService.editArticle(this.editedArticle);

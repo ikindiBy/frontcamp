@@ -1,5 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ArticleService } from "../shared/article.service";
+import { IArticle } from "../shared/IArticle";
 
 @Component({
   selector: "app-article-page",
@@ -7,10 +9,22 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ["./article-page.component.css"]
 })
 export class ArticlePageComponent implements OnInit {
-  public articleNumber: string;
-  constructor(private route: ActivatedRoute) {}
+  @Input() article: IArticle;
+  @Output() delete = new EventEmitter();
+
+  constructor(
+    private articleService: ArticleService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.articleNumber = this.route.snapshot.params["id"];
+    let articleId = this.activatedRoute.snapshot.paramMap.get("id");
+    this.article = this.articleService.getArticle(+articleId);
+  }
+
+  onDelete() {
+    this.articleService.deleteArticle(this.article);
+    this.router.navigate(["/"]);
   }
 }

@@ -1,13 +1,12 @@
 <div class="form_editing">
-  <form (ngSubmit)="editArticle(); artileForm.reset()" #artileForm="ngForm">
+  <form (ngSubmit)="createArticle(); artileForm.reset()" #artileForm="ngForm">
     <div class="input_field">
       <label for="heading">Heading</label>
       <input
         type="text"
-        [(ngModel)]="editedArticle.heading"
+        [(ngModel)]="newArticle.heading"
         name="heading"
         required
-        value="sdfsdf sfd sdf sdf"
       />
     </div>
 
@@ -15,14 +14,14 @@
       <label for="description">Short description</label>
       <input
         type="text"
-        [(ngModel)]="editedArticle.description"
+        [(ngModel)]="newArticle.description"
         name="description"
       />
     </div>
 
     <div class="input_field">
       <label for="">Content</label>
-      <textarea type="text" [(ngModel)]="editedArticle.content" name="content">
+      <textarea type="text" [(ngModel)]="newArticle.content" name="content">
       </textarea>
     </div>
 
@@ -40,21 +39,17 @@
 
     <div class="input_field">
       <label for="">Date</label>
-      <input type="date" [(ngModel)]="editedArticle.date" name="date" />
+      <input type="date" [(ngModel)]="newArticle.date" name="date" />
     </div>
 
     <div class="input_field">
       <label for="author">Author</label>
-      <input type="text" [(ngModel)]="editedArticle.author" name="author" />
+      <input type="text" [(ngModel)]="newArticle.author" name="author" />
     </div>
 
     <div class="input_field">
       <label for="sourceURL">Source URL</label>
-      <input
-        type="text"
-        [(ngModel)]="editedArticle.sourceURL"
-        name="sourceURL"
-      />
+      <input type="text" [(ngModel)]="newArticle.sourceURL" name="sourceURL" />
     </div>
 
     <div class="button_field">
