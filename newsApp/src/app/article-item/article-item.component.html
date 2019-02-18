@@ -1,0 +1,21 @@
+<div class="news_item">
+  <div class="data_article">
+    <h4>{{ article.heading }}</h4>
+    <p>
+      {{ article.content }}
+    </p>
+    <a href="#" (click)="readMore()" [routerLink]="route">Read more...</a>
+  </div>
+  <div class="time_mark">
+    <p>{{ article.date }}</p>
+    <p>{{ article.author }}</p>
+  </div>
+  <div class="control_block">
+    <button class="delete icon" (click)="onEdite()">
+      <i class="material-icons">edit</i>
+    </button>
+    <button class="delete icon" (click)="onDelete()">
+      <i class="material-icons">delete</i>
+    </button>
+  </div>
+</div>

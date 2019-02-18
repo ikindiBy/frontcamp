@@ -1,0 +1,28 @@
+p,
+h4 {
+  margin: 0;
+}
+
+.list_wrapper {
+  width: 100%;
+  margin: 5px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+button {
+  width: 60%;
+  height: 40px;
+  margin: 5px auto;
+  text-align: center;
+  background-color: #1cdaaa;
+  border: solid 2px #1cdaaa;
+  border-radius: 10%;
+  box-sizing: border-box;
+}
+
+button:hover {
+  border: solid 2px #096e54;
+}

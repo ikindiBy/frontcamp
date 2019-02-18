@@ -1,0 +1,66 @@
+<div class="form_editing">
+  <form (ngSubmit)="editArticle(); artileForm.reset()" #artileForm="ngForm">
+    <div class="input_field">
+      <label for="heading">Heading</label>
+      <input
+        type="text"
+        [(ngModel)]="editedArticle.heading"
+        name="heading"
+        required
+      />
+    </div>
+
+    <div class="input_field">
+      <label for="description">Short description</label>
+      <input
+        type="text"
+        [(ngModel)]="editedArticle.description"
+        name="description"
+      />
+    </div>
+
+    <div class="input_field">
+      <label for="">Content</label>
+      <textarea type="text" [(ngModel)]="editedArticle.content" name="content">
+      </textarea>
+    </div>
+
+    <div class="input_field">
+      <div class="header_with_radio">
+        <label for="">Image</label>
+        <div class="radio_field">
+          <input type="radio" name="imageSrc" value="url" checked /> URL
+          <input type="radio" name="imageSrc" value="file" /> <span>File</span>
+        </div>
+      </div>
+
+      <input type="text" placeholder="http://..." />
+    </div>
+
+    <div class="input_field">
+      <label for="">Date</label>
+      <input type="date" [(ngModel)]="editedArticle.date" name="date" />
+    </div>
+
+    <div class="input_field">
+      <label for="author">Author</label>
+      <input type="text" [(ngModel)]="editedArticle.author" name="author" />
+    </div>
+
+    <div class="input_field">
+      <label for="sourceURL">Source URL</label>
+      <input
+        type="text"
+        [(ngModel)]="editedArticle.sourceURL"
+        name="sourceURL"
+      />
+    </div>
+
+    <div class="button_field">
+      <button type="submit" [disabled]="artileForm.form.invalid">
+        Save
+      </button>
+      <button type="button">Cancel</button>
+    </div>
+  </form>
+</div>

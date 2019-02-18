@@ -1,0 +1,33 @@
+:host {
+  height: 50px;
+  width: 800px;
+}
+
+.header_login {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #c0ffee;
+}
+
+.login_logout {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+.login_logout span {
+  margin-right: 15px;
+}
+
+.logo {
+  max-width: 20%;
+}
+
+.login_logout {
+  max-width: 40%;
+}

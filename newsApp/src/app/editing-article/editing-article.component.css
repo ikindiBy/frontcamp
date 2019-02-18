@@ -1,0 +1,51 @@
+.form_editing {
+  width: 60%;
+  margin: 5px auto;
+  border: solid 2px #1cdaaa;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  text-align: center;
+  background-color: #1cdaaa;
+  border: solid 1px #1cdaaa;
+  border-radius: 10%;
+  box-sizing: border-box;
+}
+
+button:hover {
+  border: solid 1px #096e54;
+}
+
+.input_field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 5px 0;
+}
+
+.radio_field,
+.button_field {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.header_with_radio {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.button_field {
+  justify-content: space-evenly;
+  margin: 5px 0;
+}
