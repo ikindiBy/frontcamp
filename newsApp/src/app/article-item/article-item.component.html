@@ -1,13 +1,14 @@
 <div class="news_item">
+  <img src="{{ article.urlToImage }}" alt="" />
   <div class="data_article">
-    <h4>{{ article.heading }}</h4>
+    <h4>{{ article.title }}</h4>
     <p>
-      {{ article.content }}
+      {{ article.description }}
     </p>
     <a [routerLink]="['/articlePage', article.id]">Read more...</a>
   </div>
   <div class="time_mark">
-    <p>{{ article.date }}</p>
+    <p>{{ article.publishedAt }}</p>
     <p>{{ article.author }}</p>
   </div>
   <div class="control_block">

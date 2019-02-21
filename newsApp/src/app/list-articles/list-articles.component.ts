@@ -16,7 +16,16 @@ export class ListArticlesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.articles = this.articleService.getArticles();
+    // this.articles = this.articleService.getArticles();
+    this.articleService.getArticles().subscribe(
+      (articles: any) => {
+        this.articles = articles;
+        console.log(this.articles[0]);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   editeArticle(article: IArticle) {
