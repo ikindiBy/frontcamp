@@ -53,3 +53,13 @@ export const news = [
   //   date: "19/09/2018 : 10.55"
   // }
 ];
+
+export const ALL_CATEGORIES = [
+  "general",
+  "business",
+  "entertainment",
+  "health",
+  "science",
+  "sports",
+  "technology"
+];

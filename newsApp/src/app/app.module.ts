@@ -20,6 +20,7 @@ import { EditFormComponent } from "./edit-form/edit-form.component";
 import { ArticleService } from "./shared/article.service";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { CreateArticleComponent } from "./create-article/create-article.component";
+import { SearchByNamePipe } from './search-by-name.pipe';
 
 const AppRoutes: Routes = [
   // { path: "", component: AppComponent },
@@ -49,7 +50,8 @@ const AppRoutes: Routes = [
     EditingArticleComponent,
     EditFormComponent,
     NotFoundComponent,
-    CreateArticleComponent
+    CreateArticleComponent,
+    SearchByNamePipe
   ],
   imports: [
     BrowserModule,

@@ -3,24 +3,12 @@ import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 
 import { IArticle } from "./IArticle";
-import { news } from "./data";
+import { ALL_CATEGORIES } from "./data";
 
 const KEY = "9ea41e2e635e4b6e9aa7c9d2d3d1ec05";
-const ALL_CATEGORIES = [
-  "general",
-  "business",
-  "entertainment",
-  "health",
-  "science",
-  "sports",
-  "technology"
-];
 
-const stringForGetArticles = `https://newsapi.org/v2/top-headlines?country=gb&category=${
-  ALL_CATEGORIES[4]
-}&page=0&apiKey=${KEY}`;
-
-const NUMBER_ITEMS = 10;
+const NUMBER_ITEMS = 5;
+const apiName = "https://newsapi.org/v2/top-headlines";
 
 @Injectable({
   providedIn: "root"
@@ -28,7 +16,11 @@ const NUMBER_ITEMS = 10;
 export class ArticleService {
   constructor(private http: HttpClient) {}
 
-  articles: IArticle[] = news;
+  articles: IArticle[] = [];
+  pageNumber: number = 1;
+  lastPage: number = 1;
+  totalResultsOfQuery: number = 0;
+  canLoadNext = false;
 
   getArticle(articleId): IArticle {
     let result;
@@ -38,18 +30,26 @@ export class ArticleService {
     return result;
   }
 
+  // I think it is bed dessigion, there should be normal cache
   getArticles(): any {
+    this.articles = [];
+
+    let stringForGetArticles = `${apiName}?country=gb&category=${
+      ALL_CATEGORIES[4]
+    }&page=${this.pageNumber}&pageSize=${NUMBER_ITEMS}&apiKey=${KEY}`;
+
     return this.http.get<any>(stringForGetArticles).pipe(
       map((response: any) => {
-        console.log("resp =  ", response);
-        // return response.articles;
+        console.log("resp =  ", this.pageNumber, response);
+        this.totalResultsOfQuery = response.totalResults;
+        this.lastPage = this.totalResultsOfQuery / NUMBER_ITEMS;
+
         response.articles.forEach((item, ind) => {
-          this.articles.push({ ...item, id: Date.now() + ind });
+          this.articles.push({ ...item, id: ind });
         });
         return this.articles;
       })
     );
-    // return this.articles;
   }
 
   createArticle(article) {
@@ -113,6 +113,15 @@ export class ArticleService {
     let indexOfArticle = this.articles.indexOf(article);
     if (indexOfArticle > -1) {
       this.articles.splice(indexOfArticle, 1);
+    }
+  }
+
+  loadNextPatchNews() {
+    if (this.pageNumber < this.lastPage) {
+      this.pageNumber++;
+      if (this.pageNumber < this.lastPage - 1) {
+        return true;
+      } else return false;
     }
   }
 }

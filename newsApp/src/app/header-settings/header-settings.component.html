@@ -5,8 +5,9 @@
     <option value="second">second</option>
   </select>
   <form>
-    <input type="text" [(ngModel)]="valueForFiltering" name="filter" />
-    <button>Filter</button>
+    <!-- <input type="text" [(ngModel)]="valueForFiltering" name="filter" /> -->
+    <input type="text" #valueForFiltering name="filter" />
+    <button (click)="changeFilter(valueForFiltering.value)">Filter</button>
   </form>
   <div class="checkCreation">
     <input type="checkbox" checked />

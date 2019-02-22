@@ -10,6 +10,7 @@ import { ArticleService } from "../shared/article.service";
 })
 export class ListArticlesComponent implements OnInit {
   articles: IArticle[];
+  canLoadMore: boolean = true;
 
   constructor(private articleService: ArticleService) {
     this.articles = [];
@@ -20,7 +21,19 @@ export class ListArticlesComponent implements OnInit {
     this.articleService.getArticles().subscribe(
       (articles: any) => {
         this.articles = articles;
-        console.log(this.articles[0]);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  loadMore() {
+    this.canLoadMore = this.articleService.loadNextPatchNews();
+    console.log(this.canLoadMore);
+    this.articleService.getArticles().subscribe(
+      (articles: any) => {
+        this.articles = articles;
       },
       error => {
         console.log(error);
