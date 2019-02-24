@@ -9,6 +9,7 @@ const KEY = "9ea41e2e635e4b6e9aa7c9d2d3d1ec05";
 
 const NUMBER_ITEMS = 5;
 const apiName = "https://newsapi.org/v2/top-headlines";
+const apiNameLocale = "";
 
 @Injectable({
   providedIn: "root"
