@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { IArticle } from "../shared/IArticle";
 // import { news } from "../shared/data";
 import { ArticleService } from "../shared/article.service";
@@ -9,11 +9,15 @@ import { ArticleService } from "../shared/article.service";
   styleUrls: ["./list-articles.component.css"]
 })
 export class ListArticlesComponent implements OnInit {
+  @Input() filterValue: string;
+
   articles: IArticle[];
   canLoadMore: boolean = true;
+  valueFromFilter = "";
 
   constructor(private articleService: ArticleService) {
     this.articles = [];
+    // this.valueFromFilter = this.articleService.getFilterValue();
   }
 
   ngOnInit() {
@@ -51,5 +55,9 @@ export class ListArticlesComponent implements OnInit {
 
   readMoreArticle(article: IArticle) {
     this.articleService.readMore(article);
+  }
+
+  onChangeFilterValue(value: string) {
+    this.valueFromFilter = value;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 
 @Component({
   selector: "app-header-settings",
@@ -6,11 +6,18 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./header-settings.component.css"]
 })
 export class HeaderSettingsComponent implements OnInit {
+  @Output() onChangedFilter: EventEmitter<string> = new EventEmitter();
   constructor() {}
+  valueForFiltering = "";
 
   ngOnInit() {}
 
-  addArticle() {
-    console.log("addddiiiiinnnnggg");
+  changeValue(value) {
+    this.onChangedFilter.emit(value);
+  }
+
+  clearFilter() {
+    this.valueForFiltering = "";
+    this.changeValue("");
   }
 }
