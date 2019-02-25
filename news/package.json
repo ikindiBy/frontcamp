@@ -4,18 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/**/*js",
     "start": "node index.js",
     "dev": "cross-env PORT=3001 nodemon ignore sessions/ index.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "cross-env": "^5.2.0",
     "eslint": "^5.13.0",
     "eslint-config-prettier": "^4.0.0",
     "eslint-plugin-node": "^8.0.1",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "proxyquire": "^2.1.0",
+    "sinon": "^7.2.4"
   },
   "engines": {
     "node": ">=6.0.0"

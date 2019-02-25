@@ -16,16 +16,13 @@ router.use(function(req, res, next) {
 });
 
 router.get("/", (req, res) => {
-  console.log("----------GET in My api");
   models.ItemNews.find({}).then(articles => {
     // res.render("index", { articles: articles });
-    // res.send("index hohohohoh");
     res.send({ articles: articles });
   });
 });
 
 router.get("/createArticle", (req, res) => {
-  console.log("----------get---------------/createArticle");
   res.render("createArticle");
 });
 
@@ -74,8 +71,6 @@ router.post("/updateArticle/:id", (req, res) => {
     urlToImage
   } = req.body;
 
-  console.log("======>> ", heading, publishedAt);
-
   if (heading && content) {
     models.ItemNews.where({ _id: req.params.id })
       .update({
@@ -92,7 +87,6 @@ router.post("/updateArticle/:id", (req, res) => {
 });
 
 router.get("/deleteArticle/:id", (req, res) => {
-  console.log("DELETE  id = ", req.params.id);
   models.ItemNews.deleteOne({ _id: req.params.id }, err => {
     if (err) console.log(err);
     res.redirect("/");
@@ -100,7 +94,6 @@ router.get("/deleteArticle/:id", (req, res) => {
 });
 
 router.delete("/deleteArticle/:id", (req, res) => {
-  console.log("DELETE  id = ", req.params.id);
   models.ItemNews.deleteOne({ _id: req.params.id }, err => {
     if (err) console.log(err);
     // res.redirect("/");
