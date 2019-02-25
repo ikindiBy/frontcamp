@@ -2,24 +2,55 @@ const express = require("express");
 const router = express.Router();
 const models = require("../models");
 
+router.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET,HEAD,OPTIONS,POST,PUT,DELETE"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
+
 router.get("/", (req, res) => {
+  console.log("----------GET in My api");
   models.ItemNews.find({}).then(articles => {
-    res.render("index", { articles: articles });
+    // res.render("index", { articles: articles });
+    // res.send("index hohohohoh");
+    res.send({ articles: articles });
   });
 });
 
-router.get("/createArticle", (req, res) => res.render("createArticle"));
+router.get("/createArticle", (req, res) => {
+  console.log("----------get---------------/createArticle");
+  res.render("createArticle");
+});
 
 router.post("/createArticle", (req, res) => {
-  const { title, body } = req.body;
-  if (title && body) {
+  const {
+    heading,
+    content,
+    description,
+    publishedAt,
+    author,
+    urlToImage
+  } = req.body;
+
+  if (heading && description) {
     models.ItemNews.create({
-      title,
-      body
+      heading,
+      content,
+      description,
+      publishedAt,
+      author,
+      urlToImage
     }).then(itemNews =>
       console.log("new item of news with id = ", itemNews.id)
     );
-    res.redirect("/");
+    // res.redirect("/");
   }
 });
 
@@ -34,11 +65,28 @@ router.get("/updateArticle/:id", (req, res) => {
 });
 
 router.post("/updateArticle/:id", (req, res) => {
-  const { title, body } = req.body;
-  if (title && body) {
+  const {
+    heading,
+    content,
+    description,
+    publishedAt,
+    author,
+    urlToImage
+  } = req.body;
+
+  console.log("======>> ", heading, publishedAt);
+
+  if (heading && content) {
     models.ItemNews.where({ _id: req.params.id })
-      .update({ title, body })
-      .then(() => console.log(" upDATEd   "));
+      .update({
+        heading,
+        content,
+        description,
+        publishedAt,
+        author,
+        urlToImage
+      })
+      .then(() => console.log(" upDATEd well  "));
     res.redirect("/");
   }
 });
@@ -48,6 +96,14 @@ router.get("/deleteArticle/:id", (req, res) => {
   models.ItemNews.deleteOne({ _id: req.params.id }, err => {
     if (err) console.log(err);
     res.redirect("/");
+  });
+});
+
+router.delete("/deleteArticle/:id", (req, res) => {
+  console.log("DELETE  id = ", req.params.id);
+  models.ItemNews.deleteOne({ _id: req.params.id }, err => {
+    if (err) console.log(err);
+    // res.redirect("/");
   });
 });
 

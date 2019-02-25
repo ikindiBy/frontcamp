@@ -1,8 +1,13 @@
 <div class="header_settings">
-  <select name="select">
+  <select
+    name="select"
+    [(ngModel)]="sourceNews"
+    name="sourceNews"
+    (change)="onChange()"
+  >
     <option disabled>Select source</option>
-    <option value="firs">firs</option>
-    <option value="second">second</option>
+    <option [value]="srcNews.local">{{ srcNews.local }}</option>
+    <option [value]="srcNews.global">{{ srcNews.global }}</option>
   </select>
   <form>
     <input

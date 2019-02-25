@@ -18,10 +18,11 @@ export class EditingArticleComponent implements OnInit {
 
   ngOnInit() {
     let articleId = this.activatedRoute.snapshot.paramMap.get("id");
-    this.editedArticle = this.articleService.getArticle(+articleId);
+    this.editedArticle = this.articleService.getArticleById(articleId);
   }
 
   editArticle() {
+    console.log("____________", this.editedArticle);
     this.articleService.editArticle(this.editedArticle);
   }
 }

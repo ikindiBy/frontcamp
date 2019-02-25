@@ -13,7 +13,7 @@ export class ArticleItemComponent implements OnInit {
   @Output() readMore = new EventEmitter();
 
   onDelete() {
-    this.delete.emit(this.article);
+    this.delete.emit(this.article.id);
   }
 
   onEdite() {

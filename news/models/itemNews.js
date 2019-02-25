@@ -3,12 +3,28 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema(
   {
-    title: {
+    heading: {
       type: String,
       required: true
     },
-    body: {
+    content: {
       type: String
+    },
+    description: {
+      type: String,
+      required: true
+    },
+    publishedAt: {
+      type: String,
+      required: true
+    },
+    author: {
+      type: String,
+      required: true
+    },
+    urlToImage: {
+      type: String,
+      required: true
     }
   },
   {

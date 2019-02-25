@@ -20,11 +20,11 @@ export class ArticlePageComponent implements OnInit {
 
   ngOnInit() {
     let articleId = this.activatedRoute.snapshot.paramMap.get("id");
-    this.article = this.articleService.getArticle(+articleId);
+    this.article = this.articleService.getArticleById(articleId);
   }
 
   onDelete() {
-    this.articleService.deleteArticle(this.article);
+    this.articleService.deleteArticle(this.article.id);
     this.router.navigate(["/"]);
   }
 }

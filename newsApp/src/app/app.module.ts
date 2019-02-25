@@ -15,12 +15,11 @@ import { HeaderSettingsComponent } from "./header-settings/header-settings.compo
 import { FooterComponent } from "./footer/footer.component";
 import { ListArticlesComponent } from "./list-articles/list-articles.component";
 import { EditingArticleComponent } from "./editing-article/editing-article.component";
-import { EditFormComponent } from "./edit-form/edit-form.component";
 
 import { ArticleService } from "./shared/article.service";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { CreateArticleComponent } from "./create-article/create-article.component";
-import { SearchByNamePipe } from './search-by-name.pipe';
+import { SearchByNamePipe } from "./search-by-name.pipe";
 
 const AppRoutes: Routes = [
   // { path: "", component: AppComponent },
@@ -48,7 +47,6 @@ const AppRoutes: Routes = [
     FooterComponent,
     ListArticlesComponent,
     EditingArticleComponent,
-    EditFormComponent,
     NotFoundComponent,
     CreateArticleComponent,
     SearchByNamePipe

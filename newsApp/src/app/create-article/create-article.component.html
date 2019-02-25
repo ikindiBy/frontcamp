@@ -34,7 +34,12 @@
         </div>
       </div>
 
-      <input type="text" placeholder="http://..." />
+      <input
+        type="text"
+        placeholder="http://..."
+        [(ngModel)]="newArticle.urlToImage"
+        name="urlToImage"
+      />
     </div>
 
     <div class="input_field">
