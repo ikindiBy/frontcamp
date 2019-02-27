@@ -66,7 +66,7 @@ router.post("/createArticle", (req, res) => {
 //   });
 // });
 
-router.post("/updateArticle/:id", (req, res) => {
+router.put("/updateArticle/:id", (req, res) => {
   const {
     heading,
     content,
@@ -112,7 +112,7 @@ router.post("/updateArticle/:id", (req, res) => {
 router.delete("/deleteArticle/:id", (req, res) => {
   models.ItemNews.deleteOne({ _id: req.params.id }, err => {
     if (err) {
-      res.status(404).send(err);
+      res.status(400).send(err);
     } else {
       res.sendStatus(200);
     }

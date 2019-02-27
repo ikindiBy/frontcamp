@@ -25,6 +25,17 @@ const articlesMock = [
   }
 ];
 
+const articleForUpdateMock = 
+  {
+    _id: "0123",
+    heading: "fff",
+    content: "asdfsdf yyy",
+    description: "asdsdfsdf",
+    publishedAt: "2017",
+    author: "Rddddob",
+    urlToImage: "//moddddck1"
+  };
+
 const articleMock = articlesMock[1];
 
 function ItemNewsMock() {
@@ -132,7 +143,7 @@ describe("articles", () => {
         .request(app)
         .delete("/deleteArticle/1")
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(400);
           done();
         });
     });
@@ -143,7 +154,8 @@ describe("articles", () => {
       updateCbArgs = [null, articleMock];
       chai
         .request(app)
-        .post("/updateArticle/1")
+        .put("/updateArticle/1")
+        .send(articleForUpdateMock)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a("object");
@@ -156,9 +168,10 @@ describe("articles", () => {
       updateCbArgs = [errorMessage];
       chai
         .request(app)
-        .post("/updateArticle/1")
+        .put("/updateArticle/1")
+        .send(articleForUpdateMock)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(400);
           done();
         });
     });
