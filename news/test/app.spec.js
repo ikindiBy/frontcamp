@@ -15,7 +15,7 @@ const articlesMock = [
     urlToImage: "//mock1"
   },
   {
-    _id: "8787",
+    _id: "1",
     heading: "tyu",
     content: "tyu ssstyu yyy",
     description: "tyua",
@@ -25,7 +25,7 @@ const articlesMock = [
   }
 ];
 
-const articleMock = articlesMock[0];
+const articleMock = articlesMock[1];
 
 function ItemNewsMock() {
   return ItemNewsMock;
@@ -33,24 +33,29 @@ function ItemNewsMock() {
 
 const errorMessage = "Error!";
 
-// const app = proxyquire("../app", {
-//   "./routes": {
-//     articles: {
-//       articles: proxyquire("../routes", {
-//         "../models": {
-//           ItemNews: ItemNewsMock
-//         }
-//       })
-//     }
-//   }
-// });
+let findCbArgs, deleteCbArgs, updateCbArgs;
 
-// let findCbArgs;
+ItemNewsMock.find = (filter, cb) => {
+  cb(...findCbArgs);
+};
 
-// ItemNewsMock.find = (filter, cb) => {
-//   console.log("---------------------");
-//   cb(...findCbArgs);
-// };
+ItemNewsMock.updateOne = (filter, obj, cb) => {
+  cb(...updateCbArgs);
+};
+
+ItemNewsMock.deleteOne = (filter, cb) => {
+  cb(...deleteCbArgs);
+};
+
+const articlesRouteMock = proxyquire("../routes/articles", {
+  "../models": {
+    ItemNews: ItemNewsMock
+  }
+});
+
+const routesMock = proxyquire("../routes", {
+  "./articles": articlesRouteMock
+});
 
 const app = proxyquire("../app", {
   passport: {
@@ -61,7 +66,8 @@ const app = proxyquire("../app", {
     session: () => {
       return (req, res, next) => next();
     }
-  }
+  },
+  "./routes": routesMock
 });
 
 chai.use(chaiHttp);
@@ -79,18 +85,98 @@ describe("app", () => {
         });
     });
   });
-
-  //   describe("GET to /logout", () => {
-  //     it("should redirect to /", done => {
-  //       chai
-  //         .request(app)
-  //         .get("/logout")
-  //         // .expect("Location", "/")
-  //         .end((err, res) => {
-  //           //   res.should.have.status(200);
-  //           res.header["location"].should.include("/");
-  //           done();
-  //         });
-  //     });
-  //   });
 });
+
+describe("articles", () => {
+  describe("GET to /", () => {
+    it("should return list articles", done => {
+      findCbArgs = [null, articlesMock];
+      chai
+        .request(app)
+        .get("/")
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a("array");
+          res.body.should.be.eql(articlesMock);
+          done();
+        });
+    });
+
+    it("should return status 404 if there are no articles", done => {
+      findCbArgs = [null, []];
+      chai
+        .request(app)
+        .get("/news")
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
+  });
+
+  describe("DELETE to /deleteArticle/:id", () => {
+    it("should return status 200", done => {
+      deleteCbArgs = [null];
+      chai
+        .request(app)
+        .delete("/deleteArticle/1")
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
+    });
+
+    it("should return status 404 in case of error", done => {
+      deleteCbArgs = [errorMessage];
+      chai
+        .request(app)
+        .delete("/deleteArticle/1")
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
+  });
+
+  describe("UPDATE to /updateArticle/:id", () => {
+    it("should return status 200", done => {
+      updateCbArgs = [null, articleMock];
+      chai
+        .request(app)
+        .post("/updateArticle/1")
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a("object");
+          res.body.should.be.eql(articleMock);
+          done();
+        });
+    });
+
+    it("should return status 404 in case of error", done => {
+      updateCbArgs = [errorMessage];
+      chai
+        .request(app)
+        .post("/updateArticle/1")
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
+  });
+});
+
+/**
+ * 
+ *   describe("GET to /test", () => {
+    it("should return Admin greting", done => {
+      chai
+        .request(app)
+        .get("/test")
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.text.should.be.eql("Test hello");
+          done();
+        });
+    });
+  });
+ */

@@ -16,15 +16,19 @@ router.use(function(req, res, next) {
 });
 
 router.get("/", (req, res) => {
-  models.ItemNews.find({}).then(articles => {
-    // res.render("index", { articles: articles });
-    res.send({ articles: articles });
+  models.ItemNews.find({}, (err, articles) => {
+    if (articles.length) {
+      res.send(articles);
+    } else {
+      res.sendStatus(404);
+    }
   });
 });
 
-router.get("/createArticle", (req, res) => {
-  res.render("createArticle");
-});
+/** it is for template on back-end side */
+// router.get("/createArticle", (req, res) => {
+//   res.render("createArticle");
+// });
 
 router.post("/createArticle", (req, res) => {
   const {
@@ -51,15 +55,16 @@ router.post("/createArticle", (req, res) => {
   }
 });
 
-router.get("/updateArticle/:id", (req, res) => {
-  models.ItemNews.findById(req.params.id, function(err, article) {
-    const { title, body } = article;
-    res.render("updateArticle", {
-      titleToUpdate: title,
-      bodyToUpdate: body
-    });
-  });
-});
+/** it is for template on back-end side */
+// router.get("/updateArticle/:id", (req, res) => {
+//   models.ItemNews.findById(req.params.id, function(err, article) {
+//     const { title, body } = article;
+//     res.render("updateArticle", {
+//       titleToUpdate: title,
+//       bodyToUpdate: body
+//     });
+//   });
+// });
 
 router.post("/updateArticle/:id", (req, res) => {
   const {
@@ -72,31 +77,46 @@ router.post("/updateArticle/:id", (req, res) => {
   } = req.body;
 
   if (heading && content) {
-    models.ItemNews.where({ _id: req.params.id })
-      .update({
-        heading,
-        content,
-        description,
-        publishedAt,
-        author,
-        urlToImage
-      })
-      .then(() => console.log(" upDATEd well  "));
-    res.redirect("/");
+    models.ItemNews.updateOne(
+      { _id: req.params.id },
+      {
+        $set: {
+          heading,
+          content,
+          description,
+          publishedAt,
+          author,
+          urlToImage
+        }
+      },
+      (err, article) => {
+        if (err || !article) {
+          res.status(400).send(err);
+        } else {
+          res.status(200).send(article);
+          // res.redirect("/");/** it is for template on back-end side */
+        }
+      }
+    );
   }
 });
 
-router.get("/deleteArticle/:id", (req, res) => {
-  models.ItemNews.deleteOne({ _id: req.params.id }, err => {
-    if (err) console.log(err);
-    res.redirect("/");
-  });
-});
+/** it is for template on back-end side */
+// router.get("/deleteArticle/:id", (req, res) => {
+//   models.ItemNews.deleteOne({ _id: req.params.id }, err => {
+//     if (err) console.log(err);
+//     res.redirect("/");
+//   });
+// });
 
 router.delete("/deleteArticle/:id", (req, res) => {
   models.ItemNews.deleteOne({ _id: req.params.id }, err => {
-    if (err) console.log(err);
-    // res.redirect("/");
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.sendStatus(200);
+    }
+    // res.redirect("/"); /** it is for template on back-end side */
   });
 });
 
