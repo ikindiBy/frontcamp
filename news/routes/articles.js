@@ -48,9 +48,14 @@ router.post("/createArticle", (req, res) => {
       publishedAt,
       author,
       urlToImage
-    }).then(itemNews =>
-      console.log("new item of news with id = ", itemNews.id)
-    );
+    }, (err, article) => {
+      if (err || !article) {
+        res.status(400).send(err);
+      } else {
+        res.status(200).send(article);
+        // res.redirect("/");/** it is for template on back-end side */
+      }
+    });
     // res.redirect("/");
   }
 });

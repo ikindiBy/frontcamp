@@ -25,9 +25,8 @@ const articlesMock = [
   }
 ];
 
-const articleForUpdateMock = 
+const articleForUpdateDelMock = 
   {
-    _id: "0123",
     heading: "fff",
     content: "asdfsdf yyy",
     description: "asdsdfsdf",
@@ -44,7 +43,7 @@ function ItemNewsMock() {
 
 const errorMessage = "Error!";
 
-let findCbArgs, deleteCbArgs, updateCbArgs;
+let findCbArgs, deleteCbArgs, updateCbArgs, createCbArgs;
 
 ItemNewsMock.find = (filter, cb) => {
   cb(...findCbArgs);
@@ -56,6 +55,10 @@ ItemNewsMock.updateOne = (filter, obj, cb) => {
 
 ItemNewsMock.deleteOne = (filter, cb) => {
   cb(...deleteCbArgs);
+};
+
+ItemNewsMock.create = (filter, cb) => {
+  cb(...createCbArgs);
 };
 
 const articlesRouteMock = proxyquire("../routes/articles", {
@@ -137,7 +140,7 @@ describe("articles", () => {
         });
     });
 
-    it("should return status 404 in case of error", done => {
+    it("should return status 400 in case of error", done => {
       deleteCbArgs = [errorMessage];
       chai
         .request(app)
@@ -155,7 +158,7 @@ describe("articles", () => {
       chai
         .request(app)
         .put("/updateArticle/1")
-        .send(articleForUpdateMock)
+        .send(articleForUpdateDelMock)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a("object");
@@ -164,12 +167,65 @@ describe("articles", () => {
         });
     });
 
-    it("should return status 404 in case of error", done => {
+    it("should return status 400 in case of error", done => {
       updateCbArgs = [errorMessage];
       chai
         .request(app)
         .put("/updateArticle/1")
-        .send(articleForUpdateMock)
+        .send(articleForUpdateDelMock)
+        .end((err, res) => {
+          res.should.have.status(400);
+          done();
+        });
+    });
+
+    it("should return status 400 in case of no result", done => {
+      updateCbArgs = [null, null];
+      chai
+        .request(app)
+        .put("/updateArticle/1")
+        .send(articleForUpdateDelMock)
+        .end((err, res) => {
+          res.should.have.status(400);
+          done();
+        });
+    });
+  });
+
+
+  describe("CREATE to /updateArticle/:id", () => {
+    it("should return status 200", done => {
+      createCbArgs = [null, articleMock];
+      chai
+        .request(app)
+        .post("/createArticle")
+        .send(articleForUpdateDelMock)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a("object");
+          res.body.should.be.eql(articleMock);
+          done();
+        });
+    });
+
+    it("should return status 400 in case of error", done => {
+      createCbArgs = [errorMessage];
+      chai
+        .request(app)
+        .post("/createArticle")
+        .send(articleForUpdateDelMock)
+        .end((err, res) => {
+          res.should.have.status(400);
+          done();
+        });
+    });
+
+    it("should return status 400 in case of no result", done => {
+      createCbArgs = [null, null];
+      chai
+        .request(app)
+        .post("/createArticle")
+        .send(articleForUpdateDelMock)
         .end((err, res) => {
           res.should.have.status(400);
           done();
@@ -178,18 +234,4 @@ describe("articles", () => {
   });
 });
 
-/**
- * 
- *   describe("GET to /test", () => {
-    it("should return Admin greting", done => {
-      chai
-        .request(app)
-        .get("/test")
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.text.should.be.eql("Test hello");
-          done();
-        });
-    });
-  });
- */
+
